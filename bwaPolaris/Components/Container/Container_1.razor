@@ -1,0 +1,119 @@
+﻿@typeparam TData
+@typeparam TService
+<SfSplitter Height="90vh" Width="100%">
+    <SplitterPanes>
+        <SplitterPane Size="35%" Collapsible="true">
+            <ContentTemplate>
+                <SfGrid ID="@IdData" @ref="DefaultGrid" DataSource="@dsRekapitulasi" ShowColumnChooser="true" AllowSorting="true"
+						AllowResizing="true" AllowFiltering="true" AllowReordering="true"
+						Toolbar="@_toolbarItems" AllowPdfExport="true" AllowExcelExport="true"
+						AllowSelection="true" EnableAdaptiveUI="true" AdaptiveUIMode="AdaptiveMode.Mobile"
+						EnablePersistence="true" ContextMenuItems="@_contextMenu" >
+                        <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="OnContextMenuClick" TValue="TData" OnRecordClick="@OnDataDipilih" />
+                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"/>
+                        <GridColumns>
+                            @rfColumn
+                            @foreach (var item in AtributForm)
+                            {
+                                if (item.Field.Contains("Nominal"))
+                                {
+                                    <GridColumn TextAlign="TextAlign.Center" Field="@item.Field" HeaderText="@item.CaptionRekapitulasi" Visible="@item.TampilRekapitulasi" Format="C2"></GridColumn>
+                                }
+                                else
+                                {
+                                    <GridColumn TextAlign="TextAlign.Center" Field="@item.Field" HeaderText="@item.CaptionRekapitulasi" Visible="@item.TampilRekapitulasi"></GridColumn>
+                                }
+                            }
+                        </GridColumns>
+                        @*@if (Platform.Contains("Android"))
+                        {
+                            @rfGrid_Detil
+                        }*@
+                </SfGrid>
+                <SfSpinner @bind-Visible="@IsLoading" />
+            </ContentTemplate>
+        </SplitterPane>
+        <SplitterPane Collapsible="true">
+            <ContentTemplate>
+                <SfCard CssClass="card-custom">
+                    <CardHeader Title="@JudulDetil">
+                        <ChildContent>
+                            @if (TampilkanButtonTambah)
+                            {
+                                <SfTooltip ID="TooltipDataBaru" Target="#btnDataBaru" Content="Data Baru">
+                                    <SfButton ID="btnDataBaru" OnClick="OnDataBaru" CssClass="e-flat e-custom" IconCss="fa fa-solid fa-plus"></SfButton>
+                                </SfTooltip>
+                            }
+                            @if (TampilkanButtonHapus)
+                            {  
+                                <SfTooltip ID="TooltipHapus" Target="#btnHapus" Content="Hapus">
+                                    <SfButton ID="btnHapus" OnClick="TampilkanKonfirmasiHapus" CssClass="e-flat" IconCss="fa fa-solid fa-trash"></SfButton>
+                                </SfTooltip>
+                            }
+                             @if (TampilkanButtonSimpan)
+                            {
+                                <SfTooltip ID="TooltipSimpan" Target="#btnSimpan" Content="Simpan">
+                                    <SfButton ID="btnSimpan" OnClick="Validasi_SebelumSimpan" CssClass="e-flat" IconCss="fa fa-solid fa-check"></SfButton>
+                                </SfTooltip>
+                            }
+                             @if (TampilkanButtonBatal)
+                            {
+                                <SfTooltip ID="TooltipCancel" Target="#btnCancel" Content="Batal">
+                                    <SfButton ID="btnCancel" OnClick="OnBatal_SimpanData" CssClass="e-flat" IconCss="fa fa-solid fa-close"></SfButton>
+                                </SfTooltip>
+                            }
+                        </ChildContent>
+                    </CardHeader>
+                    <CardContent>
+                        <ChildContent>
+                            <div hidden="@SembunyikanJudulDetilMobile" style="font-size: 16px;font-weight: 400;line-height: 1.5;">@JudulDetil</div>
+                            <EditForm  Model="@DataDipilih" OnValidSubmit="@OnSimpanData">
+                                <DataAnnotationsValidator />
+                                @rfDetil
+                                <div class="form-group" hidden="true">
+                                    <SfButton ID="btnSubmit" Type="submit" IsPrimary=true/>
+                                </div>
+                            </EditForm>
+                        </ChildContent>
+                    </CardContent>
+                </SfCard>
+            </ContentTemplate>
+        </SplitterPane>
+    </SplitterPanes>
+</SfSplitter>
+@*DialogRenameKolom*@
+<SfDialog Target="#target" EnableResize="true" AllowDragging="true" Width="40%" Height="Auto" @bind-Visible="@_isMenuRenameColumnVisible" AllowPrerender="true" IsModal="true">
+    <DialogTemplates>
+        <Header>Rename Kolom</Header>
+        <Content>
+            <SfTextBox Placeholder="Caption Lama" Value="@_kolomDipilih.CaptionRekapitulasi" FloatLabelType='@FloatLabelType.Auto'></SfTextBox>
+            <SfTextBox Placeholder="Caption Baru" @bind-Value="@_textBaru" FloatLabelType='@FloatLabelType.Auto'></SfTextBox>
+        </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="Simpan" IsPrimary="true" OnClick="@OnRenameColumn" />
+        <DialogButton Content="Batal" OnClick="@CloseRenameColumnDialog" />
+    </DialogButtons>
+</SfDialog>
+@*DialogRenameKolom*@
+
+@*Alert*@
+<SfDialog Width="250px" IsModal="true" @bind-Visible="@DialogKonfirmasiHapus">
+    <DialogTemplates>
+        <Content> Anda yakin untuk menghapus data ini? </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="Ya, hapus!" IsPrimary="true" OnClick="@OnHapusData" />
+        <DialogButton Content="Batal" OnClick="@SembunyikanKonfirmasiHapus" />
+    </DialogButtons>
+</SfDialog>
+
+<style>
+    .card-custom{
+        border:none;
+    }
+
+    .rz-dropdown {
+        width: 100% !important;
+    }
+</style>

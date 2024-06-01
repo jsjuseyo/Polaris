@@ -1,0 +1,37 @@
+﻿@layout AuthLayout
+@page "/"
+@using Mapster;
+@using bwaPolaris.Components.Layout
+@inject NavigationManager NavigationManager
+@inject svcLogin svcLogin
+@inject svcBaseService bases
+@*DialogLogin*@
+<div id="target"></div>
+<SfDialog Target="#target" EnableResize="true" AllowDragging="true" ShowCloseIcon="true" Width="30%" MinHeight="@_minHeight" Visible="true" AllowPrerender="true" IsModal="true">
+    <DialogTemplates>
+        <Header>Login</Header>
+        <Content>
+            <SfTextBox Placeholder="Username" @bind-Value="@_username" ShowClearButton="true" FloatLabelType='@FloatLabelType.Auto'></SfTextBox>
+            <SfTextBox Placeholder="Password" @bind-Value="@_password" ShowClearButton="true" Type="InputType.Password" FloatLabelType='@FloatLabelType.Auto'></SfTextBox>
+        </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="Submit" IsPrimary="true" OnClick="@OnLogin" />
+    </DialogButtons>
+</SfDialog>
+@*DialogLogin*@
+@code {
+    public string _minHeight { get; set; } = "Auto";
+    public string _username { get; set; } = "";
+    public string _password { get; set; } = "";
+
+    async void OnLogin()
+    {
+        var data = await svcLogin.OnLogin(_username, _password);
+        if (data.IsOK)
+        {
+            bases.User = data.Adapt<T9User>();
+            NavigationManager.NavigateTo("/index");
+        }
+    }
+}

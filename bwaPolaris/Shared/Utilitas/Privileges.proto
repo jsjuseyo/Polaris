@@ -1,0 +1,48 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "bwaPolaris.Shared";
+package MasterFormPackage;
+
+import "google/protobuf/wrappers.proto";
+service svpPrivileges {
+  // Sends a greeting
+  rpc GetPrivileges (rqsPrivileges) returns (rplPrivileges);
+  rpc GetPrivilegesById (rqsPrivileges) returns (proPrivileges);
+  rpc InsertPrivileges (proPrivileges) returns (rplUpdatePrivileges);
+  rpc UpdatePrivileges (proPrivileges) returns (rplUpdatePrivileges);
+  rpc DeletePrivileges (proPrivileges) returns (rplUpdatePrivileges);
+  rpc ResetPrivileges (rqsPrivileges) returns (rplUpdatePrivileges);
+
+}
+
+// The request message.
+message rqsPrivileges {
+	string IdForm = 1; //Sementara
+	string IdUser = 2;
+}
+
+message rplPrivileges {
+	repeated proPrivileges DaftarPrivileges = 1; 
+}
+
+
+message proPrivileges{ //Sementara
+	string IdKonfigurasiAkses = 1;
+	string IdForm = 2;
+	string IdUser= 3;
+	bool IsAbleToReadData = 4;
+	bool IsAbleToEditData = 5;
+	bool IsAbleToDeleteData = 6;
+	bool IsAbleToAddData = 7;
+
+	string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+}
+
+message rplUpdatePrivileges {
+	bool IsOK = 1;
+	string Hasil = 2;
+}

@@ -1,0 +1,39 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "bwaPolaris.Shared";
+
+
+service svpLogin {
+  rpc Login(RqsLogin) returns (RplLogin);
+  rpc GetUser(RqsUser) returns (RplUser);
+}
+
+message RqsLogin{
+	string Username = 1;
+	string Password = 2;
+}
+
+message RqsUser{
+	string IdUser = 1;
+}
+
+message RplLogin{
+	string Token = 1;
+	bool IsOK = 2;
+
+	string IdUser = 3;
+	string Role = 4;
+	string Nama = 5;
+	string Username = 6;
+	string Password = 7;
+	string Email = 8;
+}
+
+message RplUser{
+	string IdUser = 1;
+	string Role = 2;
+	string Nama = 3;
+	string Username = 4;
+	string Password = 5;
+	string Email = 6;
+}

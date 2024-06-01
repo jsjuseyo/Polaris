@@ -1,0 +1,76 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "bwaPolaris.Shared";
+package MasterJabatanPackage;
+
+import "google/protobuf/wrappers.proto";
+
+// Definisikan Jabatan service.
+service svpMasterJabatan {
+	rpc GetJabatanById (RqsJabatanById) returns (RplJabatanById);
+	rpc GetJabatan (RqsJabatan) returns (RplJabatan);
+	
+    rpc InsertJabatan (RqsInsertJabatan) returns (RplWriteJabatan);
+    rpc UpdateJabatan (RqsUpdateJabatan) returns (RplWriteJabatan);
+	rpc DeleteJabatan (RqsDeleteJabatan) returns (RplWriteJabatan);
+}
+
+message RqsJabatanById {
+	string IdJabatan = 1;
+}
+message RplJabatanById {
+    string IdJabatan = 1;
+    string Jabatan = 2;
+    optional string Kode = 3;
+    optional string Keterangan = 4;
+
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+}
+
+message RqsJabatan {
+
+}
+
+message RplJabatan {
+    repeated RplJabatanById ListT0Jabatan = 1;
+}
+
+message RqsInsertJabatan {
+    string IdJabatan = 1;
+    string Jabatan = 2;
+    optional string Kode = 3;
+    optional string Keterangan = 4;
+    
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+}
+
+message RqsUpdateJabatan {
+    string IdJabatan = 1;
+    string Jabatan = 2;
+    optional string Kode = 3;
+    optional string Keterangan = 4;
+    
+
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+}
+
+message RqsDeleteJabatan {
+    string IdJabatan = 1;
+}
+
+message RplWriteJabatan {
+    bool IsOK = 1;
+	string Result = 2;
+}

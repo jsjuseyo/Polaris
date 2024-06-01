@@ -1,0 +1,83 @@
+﻿@using System.Reflection
+@using Syncfusion.Blazor.Grids
+@using bwaPolaris.Components
+@typeparam TData
+@inject svcForm svcForm
+<SfGrid ID="@IdData" @ref="Grid" DataSource="@GridData" ShowColumnChooser="true" AllowSorting="true"
+		AllowPaging="false" AllowResizing="true" AllowReordering="true" AllowFiltering="true"
+		Toolbar="@ToolbarItems" AllowPdfExport="true" AllowExcelExport="true"
+		AllowSelection="true" EnableAdaptiveUI="true" AdaptiveUIMode="AdaptiveMode.Mobile" 
+		EnablePersistence="true" ContextMenuItems="@_contextMenu">
+        <GridEvents OnActionBegin="@GridUpdate" ContextMenuItemClicked="OnContextMenuClick" RowDataBound="@DataBound" TValue="TData"></GridEvents>
+        <GridPageSettings PageSize="10"/>
+        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"/>
+        <GridColumns>
+        @GridColumn
+        @foreach (var item in AtributForm.Where(x => x.TampilRekapitulasi == true).ToList())
+        {
+            if (!item.Field.Contains("Id"))
+            {
+                <GridColumn Field="@item.Field" TextAlign="TextAlign.Center" HeaderText="@item.CaptionRekapitulasi" Visible="@item.TampilMobile"></GridColumn>
+            }
+            else
+            {
+                <GridColumn Field="@item.Field" IsIdentity="true" IsPrimaryKey="true" HeaderText="@item.CaptionRekapitulasi" ValidationRules="@(new ValidationRules{ Required=false})" Visible="@item.TampilDetil"></GridColumn>
+            }
+        }
+      </GridColumns>
+</SfGrid>
+<div hidden="hidden">@GridIdForm</div>
+@code {
+    [Parameter]
+    public SfGrid<TData> Grid { get; set; }
+
+    [Parameter]
+    public bool DiperbolehkanEditData { get; set; }
+
+    [Parameter]
+    public string IdData { get; set; }
+
+    [Parameter]
+    public string GridIdForm { get; set; }
+    [Parameter]
+    public List<TData> GridData { get; set; }
+
+    [Parameter]
+    public string[] ToolbarItems { get; set; } = new string[] { "ColumnChooser" };
+
+    [Parameter]
+    public RenderFragment? GridColumn { get; set; }
+
+    public List<T1AtributForm> AtributForm = new();
+
+    private static List<ContextMenuItemModel> _contextMenu = new();
+    protected override async void OnParametersSet()
+    {
+        _contextMenu.Clear();
+        _contextMenu.Add(new ContextMenuItemModel { Text = "Column Chooser", Target = ".e-content", Id = "columnChooser" });
+        _contextMenu.Add(new ContextMenuItemModel { Text = "Reset Layout", Target = ".e-content", Id = "reset" });
+        AtributForm.Clear();
+        AtributForm = await svcForm.GetDataAtributForm(GridIdForm);
+        this.StateHasChanged();
+    }
+
+    public async Task OnContextMenuClick(ContextMenuClickEventArgs<TData> args)
+    {
+
+        if (args.Item.Id == "reset")
+        {
+            await Grid.ResetPersistDataAsync();
+        }
+        else if (args.Item.Id == "columnChooser")
+        {
+            await Grid.OpenColumnChooser();
+        }
+    }
+
+    [Parameter]
+    public EventCallback<ActionEventArgs<TData>> GridUpdate { get; set; }
+
+    [Parameter]
+    public EventCallback<RowDataBoundEventArgs<TData>> DataBound { get; set; }
+
+}

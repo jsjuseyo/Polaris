@@ -1,0 +1,118 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "bwaPolaris.Shared";
+package MasterFormPackage;
+
+import "google/protobuf/wrappers.proto";
+
+// Definisikan Form service.
+service svpMasterForm {
+	rpc GetFormByIdUser (RqsFormByIdUser) returns (RplForm);
+	rpc GetForm (RqsForm) returns (RplForm);
+
+	rpc GetT1AtributFormById (RqsFormById) returns (RplT1AtributFormById);
+
+    rpc InsertForm (RqsInsertForm) returns (RplWriteForm);
+    rpc UpdateForm (RqsUpdateForm) returns (RplWriteForm);
+	rpc DeleteForm (RqsDeleteForm) returns (RplWriteForm);
+
+    rpc UpdateAtributForm (PtmT1AtributForm) returns (RplWriteForm);
+
+}
+
+message RqsFormById {
+	string IdForm = 1;
+}
+
+message RqsFormByIdUser {
+	string IdUser = 1;
+}
+message RplFormById {
+    string IdForm = 1;
+    google.protobuf.StringValue IdParent = 2;
+    optional string Form = 3;
+    optional string Url = 4;
+    optional string Icon = 5;
+    optional bool HasChild = 6;
+    optional string Keterangan = 7;
+    bool IsAbleToReadData = 8;
+	bool IsAbleToEditData = 9;
+	bool IsAbleToDeleteData = 10;
+	bool IsAbleToAddData = 11;
+
+	string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+}
+
+message RqsForm {
+}
+message RplForm {
+    repeated RplFormById ListT0Form = 1;
+}
+
+message PtmT1AtributForm {
+	
+    string IdAtributForm = 1;
+    optional string IdForm = 2;
+    optional string Field = 3;
+    optional bool TampilRekapitulasi = 4;
+    optional bool TampilDetil = 5;
+    optional string CaptionRekapitulasi = 6;
+    optional string CaptionDetil = 7;
+    optional bool TampilMobile = 8;
+
+}
+
+message RplT1AtributFormById {
+	repeated PtmT1AtributForm ListT1AtributForm = 1;
+}
+
+message RqsInsertForm {
+    string IdForm = 1;
+    google.protobuf.StringValue IdParent = 2;
+    optional string Form = 3;
+    optional string Url = 4;
+    optional string Icon = 5;
+    bool HasChild = 6;
+    optional string Keterangan = 7;
+
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+
+    repeated PtmT1AtributForm ListT1AtributForm = 301;
+}
+
+message RqsUpdateForm {
+    string IdForm = 1;
+    google.protobuf.StringValue IdParent = 2;
+    optional string Form = 3;
+    optional string Url = 4;
+    optional string Icon = 5;
+    bool HasChild = 6;
+    optional string Keterangan = 7;
+
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+
+    repeated PtmT1AtributForm ListT1AtributForm = 301;
+}
+
+message RqsDeleteForm {
+    string IdForm = 1;
+    string IdOperator = 2;
+}
+
+message RplWriteForm {
+    bool IsOK = 1;
+	string Result = 2;
+}
+

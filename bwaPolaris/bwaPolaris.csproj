@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Shared\User\Jabatan.proto" />
+    <None Remove="Shared\User\Staf.proto" />
+    <None Remove="Shared\Utilitas\DataOption.proto" />
+    <None Remove="Shared\Utilitas\Form.proto" />
+    <None Remove="Shared\Utilitas\Login.proto" />
+    <None Remove="Shared\Utilitas\Privileges.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Shared\Utilitas\DataOption.proto" GrpcServices="Both" />
+    <Protobuf Include="Shared\Utilitas\Form.proto" GrpcServices="Both" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Google.Protobuf" Version="3.25.2" />
+	  <PackageReference Include="Grpc.AspNetCore" Version="2.60.0" />
+	  <PackageReference Include="MudBlazor" Version="6.19.1" />
+	  <PackageReference Include="NewId" Version="4.0.1" />
+	  <PackageReference Include="Radzen.Blazor" Version="4.32.1" />
+	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+	  <PackageReference Include="Grpc.AspNetCore.Web" Version="2.60.0" />
+	  <PackageReference Include="Mapster" Version="7.4.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Grpc.Core" Version="2.46.6" />
+	  <PackageReference Include="Grpc.Net.Client" Version="2.60.0" />
+	  <PackageReference Include="Grpc.Net.Client.Web" Version="2.60.0" />
+	  <PackageReference Include="Syncfusion.Blazor.Buttons" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Calendars" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Cards" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Grid" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Layouts" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Navigations" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Popups" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Spinner" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.Themes" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="24.2.3" />
+	  <PackageReference Include="Syncfusion.Licensing" Version="24.2.3" />
+	  <PackageReference Include="Toolbelt.Blazor.SpeechSynthesis" Version="10.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Shared\User\Jabatan.proto" GrpcServices="Both" />
+    <Protobuf Include="Shared\User\Staf.proto" GrpcServices="Both" />
+    <Protobuf Include="Shared\Utilitas\Login.proto" GrpcServices="Both" />
+    <Protobuf Include="Shared\Utilitas\Privileges.proto" GrpcServices="Both" />
+  </ItemGroup>
+
+</Project>

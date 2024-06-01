@@ -1,0 +1,129 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "bwaPolaris.Shared";
+package MasterStafPackage;
+
+import "google/protobuf/wrappers.proto";
+
+// Definisikan Staf service.
+service svpMasterStaf {
+	rpc GetStafById (RqsStafById) returns (RplStafById);
+	rpc GetStaf (RqsStaf) returns (RplStaf);
+
+    rpc GetStafByJabatan (RqsStafByJabatan) returns (RplStaf);
+
+	rpc GetT5Jabatan_StafById (RqsStafById) returns (RplT5Jabatan_StafById);
+	
+    rpc InsertStaf (RqsInsertStaf) returns (RplWriteStaf);
+    rpc UpdateStaf (RqsUpdateStaf) returns (RplWriteStaf);
+	rpc DeleteStaf (RqsDeleteStaf) returns (RplWriteStaf);
+}
+
+message RqsStafById {
+	string IdStaf = 1;
+}
+
+message RqsStafByJabatan {
+	string Jabatan = 1;
+}
+
+message RplStafById {
+    string IdStaf = 1;
+    string Nama = 2;
+    string TempatLahir = 3;
+    string TanggalLahir = 4;
+    string Alamat = 5;
+    optional string Kode = 6;
+    string Email = 7;
+    optional string Password = 8;
+    optional string Keterangan = 9;
+    
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+}
+
+message RqsStaf {
+}
+message RplStaf {
+    repeated RplStafById ListT1Staf = 1;
+}
+
+message PtmT5Jabatan_Staf {
+	
+    string IdJabatanStaf = 1;
+    optional string IdStaf = 2;
+    google.protobuf.StringValue IdJabatan = 3;
+    optional string Jabatan = 4;
+
+	//Default BaseModelMasterDetil
+    google.protobuf.StringValue WaktuInsert = 201;
+    google.protobuf.StringValue WaktuProses = 202;
+    optional string Synchronise = 203;
+}
+
+message PtmT9Privileges{ //Sementara
+	string IdKonfigurasiAkses = 1;
+	string IdForm = 2;
+	string IdUser= 3;
+	bool IsAbleToReadData = 4;
+	bool IsAbleToEditData = 5;
+	bool IsAbleToDeleteData = 6;
+	bool IsAbleToAddData = 7;
+}
+
+message RplT5Jabatan_StafById {
+	repeated PtmT5Jabatan_Staf ListT5Jabatan_Staf = 1;
+}
+
+message RqsInsertStaf {
+    string IdStaf = 1;
+    string Nama = 2;
+    string TempatLahir = 3;
+    string TanggalLahir = 4;
+    string Alamat = 5;
+    optional string Kode = 6;
+    string Email = 7;
+    optional string Password = 8;
+    optional string Keterangan = 9;
+
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+
+    repeated PtmT5Jabatan_Staf ListT5Jabatan_Staf = 201;
+}
+
+message RqsUpdateStaf {
+    string IdStaf = 1;
+    string Nama = 2;
+    string TempatLahir = 3;
+    string TanggalLahir = 4;
+    string Alamat = 5;
+    optional string Kode = 6;
+    optional string Email = 7;
+    optional string Password = 8;
+    optional string Keterangan = 9;
+
+    string WaktuInsert = 101;
+	string WaktuProses = 102;
+	string Creator = 103;
+	string Operator = 104;
+	string Synchronise = 105;
+
+    repeated PtmT5Jabatan_Staf ListT5Jabatan_Staf = 201;
+    repeated PtmT9Privileges ListT9Privileges = 202;
+}
+
+message RqsDeleteStaf {
+    string IdStaf = 1;
+}
+
+message RplWriteStaf {
+    bool IsOK = 1;
+	string Result = 2;
+}

@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "bwaPolaris.Shared";
+import "google/protobuf/wrappers.proto";
+
+// Definisikan DataOption service.
+service svpMasterDataOption {
+	rpc GetDataOption (RqsDataOption) returns (RplDataOption);
+}
+
+message RqsDataOption {
+	string Entity = 1;
+}
+message RplDataOptionById {
+    string IdDataOption = 1;
+    optional string Entity = 2;
+    optional string DataOption = 3;
+}
+
+message RplDataOption {
+    repeated RplDataOptionById ListT9DataOption = 1;
+}
