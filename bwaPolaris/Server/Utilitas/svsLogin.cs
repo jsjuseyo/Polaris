@@ -1,8 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using static bwaPolaris.Server.modAes;
+﻿using static bwaPolaris.Server.modAes;
 
 namespace bwaPolaris.Server;
 
@@ -33,11 +29,11 @@ public class svsLogin : svpLogin.svpLoginBase
 				return hasil;
             }
 
-            //data.Password = Encrypt(request.Password);
-            //_db.Set<T9User>().Update(data);
-            //_db.SaveChangesAsync();
+			//data.Password = Encrypt(request.Password);
+			//_db.Set<T9User>().Update(data);
+			//_db.SaveChangesAsync();
 
-            var decryptPassword = Decrypt(data.Password);
+			var decryptPassword = Decrypt(data.Password);
 
             if (decryptPassword != request.Password) {
                 Metadata metadata = new Metadata { { "Error", "Password yang anda masukkan salah!" } };

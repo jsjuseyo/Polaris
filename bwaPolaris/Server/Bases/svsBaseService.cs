@@ -44,7 +44,7 @@ namespace bwaPolaris.Server
                 var staf = data as T1Staf;
                 var user = await _db.Set<T9User>().FirstOrDefaultAsync(x => x.Keterangan == staf.IdStaf.ToString());
                 user.Email = staf.Email;
-                user.Nama = staf.Nama;
+                user.Nama = staf.NamaPanggilan;
                 _db.Set<T9User>().Update(user);
             }
             
@@ -137,10 +137,10 @@ namespace bwaPolaris.Server
             if (typeof(T) == typeof(T1Staf))
             {
                 user.Keterangan = (data as T1Staf).IdStaf.ToString();
-                user.Nama = (data as T1Staf).Nama;
+                user.Nama = (data as T1Staf).NamaPanggilan;
                 user.Email = (data as T1Staf).Email;
-                user.Password = Encrypt((data as T1Staf).Nama);
-                user.Username = (data as T1Staf).Nama;
+                user.Password = Encrypt((data as T1Staf).NamaPanggilan);
+                user.Username = (data as T1Staf).NamaPanggilan;
                 user.Role = "Staf";
             }
             

@@ -29,7 +29,7 @@ message RqsStafByJabatan {
 
 message RplStafById {
     string IdStaf = 1;
-    string Nama = 2;
+    optional string NamaLengkap = 2;
     string TempatLahir = 3;
     string TanggalLahir = 4;
     string Alamat = 5;
@@ -37,6 +37,8 @@ message RplStafById {
     string Email = 7;
     optional string Password = 8;
     optional string Keterangan = 9;
+    optional string NamaPanggilan = 10;
+
     
     string WaktuInsert = 101;
 	string WaktuProses = 102;
@@ -80,7 +82,7 @@ message RplT5Jabatan_StafById {
 
 message RqsInsertStaf {
     string IdStaf = 1;
-    string Nama = 2;
+    optional string NamaLengkap = 2;
     string TempatLahir = 3;
     string TanggalLahir = 4;
     string Alamat = 5;
@@ -88,6 +90,7 @@ message RqsInsertStaf {
     string Email = 7;
     optional string Password = 8;
     optional string Keterangan = 9;
+    optional string NamaPanggilan = 10;
 
     string WaktuInsert = 101;
 	string WaktuProses = 102;
@@ -100,14 +103,15 @@ message RqsInsertStaf {
 
 message RqsUpdateStaf {
     string IdStaf = 1;
-    string Nama = 2;
-    string TempatLahir = 3;
-    string TanggalLahir = 4;
-    string Alamat = 5;
+    optional string NamaLengkap = 2;
+    optional string TempatLahir = 3;
+    optional string TanggalLahir = 4;
+    optional string Alamat = 5;
     optional string Kode = 6;
     optional string Email = 7;
     optional string Password = 8;
     optional string Keterangan = 9;
+    optional string NamaPanggilan = 10;
 
     string WaktuInsert = 101;
 	string WaktuProses = 102;
